@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>TimeCapsule®</title>
+    <p>Bem vindo ao TimeCapsule!</p>
+    <p>
+      <small
+        >Guarde suas memórias, registre em video para enviar alguém
+        especial</small
+      >
+    </p>
+    <style>
+      p {
+        color: rgb(255, 174, 0);
+        background-color: rgb(F, F, F);
+      }
+    </style>
+    <script type="text/javascript">
+      var db = openDatabase('bdtimecapsule', '1.0', 'Mybase', 4048);
+      db.transaction(function(criar) {
+        criar.executeSql(
+          'CREATE TABLE users (id INTEGER PRIMARY KEY,email TEXT,senha TEXT)'
+        );
+      });
+
+      function salvar() {
+        var email = document.getElementById('email').value;
+        var senha = document.getElementById('senha').value;
+        db.transaction(function(armazenar) {
+          armazenar.executeSql('INSERT INTO users (email,senha) VALUES (?,?)', [
+            email,
+            senha
+          ]);
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <form onsubmit="salvar()">
+      <input type="text" id="email" email="" placeholder="email" /><br />
+      <input type="password" id="senha" placeholder="Senha" email="" /><br />
+      <input type="submit" value="Entrar" />
+    </form>
+  </body>
+</html>
